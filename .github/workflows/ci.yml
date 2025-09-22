@@ -19,20 +19,23 @@ jobs:
         with:
           python-version: "3.12.3"
 
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install ruff
 
+      - name: Auto-fix code with Ruff
+        run: |
+          ruff format . --fix --line-length 88 --exclude migrations,venv || true
+
       - name: Run Ruff linter
         run: |
-          ruff check . \
-            --select ALL \
-            --ignore F401,W391 \
-            --line-length 88
-
-      - name: Run Ruff formatter
-        run: |
-          ruff format . \
-            --line-length 88 \
-            --exclude migrations,venv
+          ruff check . --select ALL --ignore F401,W391 --line-length 88

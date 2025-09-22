@@ -30,10 +30,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff
 
-      - name: Auto-fix code with Ruff
-        run: |
-          ruff format . --fix --line-length 88 --exclude migrations,venv || true
-
       - name: Run Ruff linter
         run: |
           ruff check . --select ALL --ignore F401,W391 --line-length 88

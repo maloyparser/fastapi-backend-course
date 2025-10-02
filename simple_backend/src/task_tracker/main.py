@@ -11,6 +11,7 @@ def get_tasks():
 # We add a new task, add it to the task list, and increment the id counter.
 @app.post("/tasks")
 def create_task(name: str, condition: str = 'new'):
+    global task_id_counter
     task = {'id': task_id_counter, 'name': name, 'condition': condition}
     tasks.append(task)
     task_id_counter += 1

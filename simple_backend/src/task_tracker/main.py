@@ -4,18 +4,18 @@ from fastapi import HTTPException
 app = FastAPI()
 tasks = []
 task_id_counter = 1
-# выводим список всех полученных задач
+# we display a list of all received tasks.
 @app.get("/tasks")
 def get_tasks():
     return tasks
-# добавляем новую задачу, добавляем ее в список задач и увеличиваем счетчик id
+# We add a new task, add it to the task list, and increment the id counter.
 @app.post("/tasks")
 def create_task(name: str, condition: str = 'new'):
     task = {'id': task_id_counter, 'name': name, 'condition': condition}
     tasks.append(task)
     task_id_counter += 1
     return task
-# обновляем задачу , в случае отсутствия задачи вызываем ошибку
+# We update the task; if the task is missing, we raise an error.
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, name:str, condition: str):
     for task in tasks:
@@ -24,7 +24,7 @@ def update_task(task_id: int, name:str, condition: str):
             task[condition] = condition
         return task
     raise HTTPException(status_code = 404, detail = 'task not found')
-# ищем задачу по id, если находи - удаляем, если нет - вызываем ошибку
+# We search for a task by ID, if we find it, we delete it, if not, we raise an error
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int):
     for task in tasks:

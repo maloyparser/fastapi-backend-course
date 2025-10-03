@@ -1,6 +1,8 @@
 from fastapi import FastAPI                           
 from fastapi import HTTPException                   
-from storage_gist import GistStorage                     
+from storage_gist import GistStorage
+from dotenv import load_dotenv
+load_dotenv()                     
 app = FastAPI()                                     
 storage = GistStorage()                              
 # we display a list of all received tasks.

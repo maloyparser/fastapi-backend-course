@@ -11,7 +11,7 @@ def get_tasks():
 @app.post("/tasks")
 def create_task(name: str, condition: str = 'new'):
     tasks = storage.load()
-    new_id = max((task['id'] for task in tasks), start = 0) + 1
+    new_id = max((task['id'] for task in tasks), default = 0) + 1
     task = {'id': new_id, 'name': name, 'condition': condition}
     tasks.append(task)
     storage.save(tasks)

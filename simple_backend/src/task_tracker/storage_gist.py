@@ -2,10 +2,10 @@ import os
 import requests
 import json
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()  
 GITHUB_API = 'https://api.github.com'
 class GistStorage:
-    def __init__(self, token: str = None, gist_id: str = None, filename: str = 'tasks.json'):
+    def __init__(self, token: str = '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', gist_id: str = '69fc2b19cd06bf212c1107481b1bad6f', filename: str = 'tasks.json'):
         self.token: str = token or os.getenv('GITHUB_TOKEN')
         self.gist_id: str = gist_id or os.getenv('GIST_ID')
         self.filename: str = filename

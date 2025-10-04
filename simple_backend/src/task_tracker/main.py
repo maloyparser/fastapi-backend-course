@@ -1,8 +1,8 @@
 '''backend'''
 from fastapi import FastAPI, HTTPException
-from storage import TaskStorage
+from storage_gist import GistStorage
 app = FastAPI()
-storage = TaskStorage()
+storage = GistStorage()
 # return tasks list
 @app.get("/tasks")
 def get_tasks():
@@ -37,4 +37,3 @@ def delete_task(task_id: int):
             storage.save(tasks)
             return 'task deleted'
     raise HTTPException(status_code = 404, detail = 'task not found') 
- 

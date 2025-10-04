@@ -1,8 +1,11 @@
 '''backend'''
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from storage_gist import GistStorage
+from Cloudflare import Cloudflare
 app = FastAPI()
 storage = GistStorage()
+llm = Cloudflare()
 # return tasks list
 @app.get("/tasks")
 def get_tasks():
@@ -12,7 +15,8 @@ def get_tasks():
 def create_task(name: str, condition: str = 'new'):
     tasks = storage.load()
     new_id = len(tasks) + 1
-    task = {'id': new_id, 'name': name, 'condition': condition}
+    llm_response = llm.get_llm_response(name)
+    task = {'id': new_id, 'name': name, 'condition': condition, 'description': f'LLM Suggestion: {llm_response}'}
     tasks.append(task)
     storage.save(tasks)
     return task

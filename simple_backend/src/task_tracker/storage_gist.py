@@ -15,7 +15,7 @@ class GistStorage:
             'Authorization': f'token {self.token}',
             'Accept': 'application/vnd.github+json'
         }
-
+        
     def _gist_url(self) -> str:
         return f'{GITHUB_API}/gists/{self.gist_id}'
     # loading task list from gist
